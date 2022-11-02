@@ -96,14 +96,7 @@ class NewsTableViewCell: UITableViewCell {
     
     func configure(with viewModel: NewsTableViewCellModel) {
         newsTitleLabel.text = viewModel.title
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.A"
-        let myDate = dateFormatter.date(from: viewModel.publishedAt)!
-        dateFormatter.dateFormat = "MMM dd, YYYY"
-        let somedateString = dateFormatter.string(from: myDate)
-        
-        timeLabel.text = somedateString
+        timeLabel.text = viewModel.publishedAt
         
         // Image
         if let url = viewModel.imageURL {
