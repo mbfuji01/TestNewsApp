@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.rowHeight =  UITableView .automaticDimension
-        tableView.estimatedRowHeight =  600
+        tableView.estimatedRowHeight =  100
         
         APICaller.shared.getStories { [weak self] result in
             switch result {

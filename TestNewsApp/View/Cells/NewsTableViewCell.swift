@@ -49,8 +49,7 @@ class NewsTableViewCell: UITableViewCell {
         label.text = "Солнце светит я сияю"
         label.font = UIFont(name: "Futura-medium", size: 17)
         label.textColor = .black
-        label.numberOfLines = 5
-        label.minimumScaleFactor = 0.5
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -124,21 +123,30 @@ extension NewsTableViewCell {
         NSLayoutConstraint.activate([
             newsTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 3),
             newsTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 3),
-            newsTitleLabel.trailingAnchor.constraint(equalTo: newsImageView.leadingAnchor, constant: -3),
-            newsTitleLabel.bottomAnchor.constraint(equalTo: timeLabel.topAnchor, constant: -5)
+            newsTitleLabel.trailingAnchor.constraint(equalTo: newsImageView.leadingAnchor, constant: -3)
         ])
+        newsTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        newsTitleLabel.setContentHuggingPriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: newsTitleLabel.bottomAnchor, constant: 5),
             timeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 3),
             timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
         ])
+        timeLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        timeLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+//        let timeBottomConstraint = timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
+//        timeBottomConstraint.priority = UILayoutPriority(400)
+//        timeBottomConstraint.isActive = true
         NSLayoutConstraint.activate([
             newsImageView.topAnchor.constraint(equalTo: topAnchor, constant: 3),
             newsImageView.leadingAnchor.constraint(equalTo: newsTitleLabel.trailingAnchor, constant: 3),
-            newsImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3),
+//            newsImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3),
             newsImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
             newsImageView.widthAnchor.constraint(equalToConstant: 100),
             newsImageView.heightAnchor.constraint(equalToConstant: 100),
         ])
+        let newsImageViewConstraint = newsImageView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -3)
+        newsImageViewConstraint.priority = UILayoutPriority(500)
+        newsImageViewConstraint.isActive = true
     }
 }
