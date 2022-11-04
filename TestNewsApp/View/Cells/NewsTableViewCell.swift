@@ -95,7 +95,16 @@ class NewsTableViewCell: UITableViewCell {
     
     func configure(with viewModel: NewsTableViewCellModel) {
         newsTitleLabel.text = viewModel.title
-        timeLabel.text = viewModel.publishedAt
+        
+        let months = ["01": "январь", "02": "февраль", "03": "март", "04": "апрель", "05": "май", "06": "июня", "07": "июля", "8": "августа", "9": "сентября", "10": "октября", "11": "ноября", "12": "декабря"]
+        let greeting = viewModel.publishedAt
+        let allTimeArray = greeting.split(separator: "T")
+        let allDate = allTimeArray.first ?? ""
+        let allDateArray = allDate.split(separator: "-")
+        let monthKey = String(allDateArray[1])
+        let time = allTimeArray[1].split(separator: ":")
+        let day = "\(allDateArray[2]) \(months[monthKey] ?? "января") \(allDateArray[0]) \(time[0]):\(time[1])"
+        timeLabel.text = day
         
         // Image
         if let url = viewModel.imageURL {
@@ -126,27 +135,22 @@ extension NewsTableViewCell {
             newsTitleLabel.trailingAnchor.constraint(equalTo: newsImageView.leadingAnchor, constant: -3)
         ])
         newsTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        newsTitleLabel.setContentHuggingPriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: newsTitleLabel.bottomAnchor, constant: 5),
             timeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 3),
             timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
         ])
         timeLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        timeLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-//        let timeBottomConstraint = timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
-//        timeBottomConstraint.priority = UILayoutPriority(400)
-//        timeBottomConstraint.isActive = true
         NSLayoutConstraint.activate([
             newsImageView.topAnchor.constraint(equalTo: topAnchor, constant: 3),
             newsImageView.leadingAnchor.constraint(equalTo: newsTitleLabel.trailingAnchor, constant: 3),
-//            newsImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3),
             newsImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
             newsImageView.widthAnchor.constraint(equalToConstant: 100),
             newsImageView.heightAnchor.constraint(equalToConstant: 100),
         ])
-        let newsImageViewConstraint = newsImageView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -3)
-        newsImageViewConstraint.priority = UILayoutPriority(500)
+        let newsImageViewConstraint = newsImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
+        newsImageViewConstraint.priority = UILayoutPriority(999)
         newsImageViewConstraint.isActive = true
+        
     }
 }
